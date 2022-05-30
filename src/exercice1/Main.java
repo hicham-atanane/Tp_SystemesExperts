@@ -19,8 +19,8 @@ import exercice2.RegleComposee;
             bR1.add(r3);
 
             bF1.add("P");
-    //        System.out.println("Exercice1");
-    //        System.out.println(MoteurInference.chainageAvant(bF1, bR1, "F"));
+            System.out.println("Exercice1");
+            System.out.println(MoteurInference.chainageAvant(bF1, bR1, "R"));
     //Exercice2
             RegleComposee rc_1 = new RegleComposee("A&B","C");
             RegleComposee rc_2 = new RegleComposee("C&D","F");
@@ -41,12 +41,12 @@ import exercice2.RegleComposee;
             bF2.add("C");
             bF2.add("D");
 
-    //        System.out.println("Exercice2");
-    //        System.out.println(MoteurInference.chainageAvantComp(bF2, bR2, "E"));
+            System.out.println("Exercice2");
+            System.out.println(MoteurInference.chainageAvantComp(bF2, bR2, "E"));
 
 //Exercice3
         RegleComposee rc1  = new RegleComposee("fleur&graine","phanérogame");
-        RegleComposee rc2  = new RegleComposee("phanérogame&graine","sapin");
+        RegleComposee rc2  = new RegleComposee("phanérogame&graine_nue","sapin");
         RegleComposee rc3  = new RegleComposee("phanérogame&1_cotylédone","monocotylédone");
         RegleComposee rc4  = new RegleComposee("phanérogame&2_cotylédone","dicotylédone");
         RegleComposee rc5  = new RegleComposee("monocotylédone&rhyzome","muguet");
@@ -55,7 +55,7 @@ import exercice2.RegleComposee;
         RegleComposee rc8  = new RegleComposee("feuille&fleur","cryptogame");
         RegleComposee rc9  = new RegleComposee("cryptogame&non_racine","mousse");
         RegleComposee rc10 = new RegleComposee("cryptogame&racine","fougère");
-        RegleComposee rc11 = new RegleComposee("non_feuilles&plante","thallophyte");
+        RegleComposee rc11 = new RegleComposee("non_feuille&plante","thallophyte");
         RegleComposee rc12 = new RegleComposee("thallophyte&chlorophylle","algue");
         RegleComposee rc13 = new RegleComposee("thallophyte&non_chlorophylle","champion");
         RegleComposee rc14 = new RegleComposee("non_feuilles&non_fleur&non_plante","colibacile");
@@ -84,6 +84,7 @@ import exercice2.RegleComposee;
         bF3.add("plante");
 
         System.out.println("Exercice3");
-        System.out.println(MoteurInference.chainageArriere(bF3, bR3, "fougère1"));
+//        System.out.println(MoteurInference.chainageArriere(bF3, bR3, "fougère1"));
+        System.out.println(MoteurInference.chainageAvantComp(bF3, bR3));
     }
 }

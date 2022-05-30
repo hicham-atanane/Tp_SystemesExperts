@@ -21,11 +21,7 @@ public class MoteurInference {
             }
         }
 //        vérifier si elle s’est arrêtée parce que la propVerif est retrouvée dans la liste des baseFaits ou non
-        if (baseFaits.contains(propVerif)){
-            return true;
-        } else {
-            return false;
-        }
+        return baseFaits.contains(propVerif);
     }
     public static boolean chainageAvantComp(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp, String propVerif){
         ListIterator<RegleComposee> iter = baseReglesComp.listIterator();
@@ -47,11 +43,28 @@ public class MoteurInference {
                 }
             }
 //          vérifier si elle s’est arrêtée parce que la propVerif est retrouvée dans la liste des baseFaits ou non
-            if (baseFaits.contains(propVerif)){
-                return true;
-            } else {
-                return false;
+        return baseFaits.contains(propVerif);
+        }
+    public static ArrayList<String> chainageAvantComp(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp){
+        ListIterator<RegleComposee> iter = baseReglesComp.listIterator();
+//      verifier que propVerif n'est pas dans baseFaits & baseRegles n'est pas vide
+            while (iter.hasNext()){
+                RegleComposee regle = iter.next();
+//          verifier l'existence du premisse dans les bases des faits
+                int counter = 0;
+                for (int i = 0; i < regle.getPremisse().length; i++) {
+                    if (baseFaits.contains(regle.getPremisse()[i])){
+                        counter ++;
+                    }
+                }
+//          ajouter la conclusion aux baseFaits
+//          Supprimer la regle de la baseRegle (de iter en fait)
+                if (counter == regle.getPremisse().length){
+                    baseFaits.add(regle.getConclusion());
+                    iter.remove();
+                }
             }
+        return baseFaits;
         }
     public static boolean chainageArriere(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp, String propVerif){
 //      vérifier si la PropVerif figure dans la BF, si oui, elle doit retourner true.
@@ -85,7 +98,6 @@ public class MoteurInference {
                     String valeur = sc.nextLine();
                     return false;
                 }
-                System.out.println(5);
         return true;
         }
     }

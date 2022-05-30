@@ -5,14 +5,7 @@ public class RegleComposee{
     private String[] premisse;
 
     public RegleComposee(String premissesComposees, String reponse) {
-
-        int count = 0;
-        for (int i = 0; i < premissesComposees.length(); i++) {
-            if (premissesComposees.charAt(i) == '&') {
-                count++;
-            }
-        }
-        this.premisse = premissesComposees.split("&",count);
+        this.premisse = premissesComposees.split("&");
         this.conclusion = reponse;
     }
 
