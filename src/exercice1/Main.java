@@ -38,10 +38,10 @@ import exercice2.RegleComposee;
             ArrayList<String> bF2 = new ArrayList<>();
             bF2.add("A"); bF2.add("C"); bF2.add("D");
 
-//            System.out.println("Exercice2 Chainage Arriere comp");
-//            System.out.println(MoteurInference.chainageArriereComp(bF2, bR2, "B"));
-//            System.out.println("Exercice2 Chainage Avant comp");
-//            System.out.println(MoteurInference.chainageAvantComp(bF2, bR2, "B"));
+            System.out.println("Exercice2 Chainage Arriere comp");
+            System.out.println(MoteurInference.chainageArriereComp(bF2, bR2, "B"));
+            System.out.println("Exercice2 Chainage Avant comp");
+            System.out.println(MoteurInference.chainageAvantComp(bF2, bR2, "B"));
 
 //  Exercice3 ---------------------------------------------------------------------------------------------------
             RegleComposee rc1  = new RegleComposee("fleur&graine","phanérogame");

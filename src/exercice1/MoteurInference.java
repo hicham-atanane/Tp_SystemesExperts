@@ -107,20 +107,9 @@ public class MoteurInference {
         }
         return valVerite;
     }
-    //  c pour afficher le nombre de recursivite effectue
-    private static int c = 0;
     public static boolean chainageArriereComp(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp, String propVerif){
         boolean valVerite = true;
-        c++;
-//  afficher le nombre de recursivite effectue
-//----------------------------------------------
-        System.out.println("-------------");
-        System.out.println(c);
-        System.out.println("-------------");
-//----------------------------------------------
-        System.out.println("propVerif: "+propVerif);
         if (baseFaits.contains(propVerif)){
-            System.out.println(propVerif + " existe dans la base des faits");
             valVerite = true;
         }
         else {
@@ -134,13 +123,6 @@ public class MoteurInference {
             }
             if (!reglesChoisis.isEmpty()) {
                 for (RegleComposee r : reglesChoisis) {
-//                c'est juste pour afficher la regle sur le console
-//-------------------------------------------------------------------------------------------------
-                    for (String st:r.getPremisse()) {
-                        System.out.print(st + "-");
-                    }
-                    System.out.println("->"+r.getConclusion());
-//-------------------------------------------------------------------------------------------------
                     for (String premisse : r.getPremisse()) {
                         if (!chainageArriereComp(baseFaits, baseReglesComp, premisse)){
                             valVerite = false;
