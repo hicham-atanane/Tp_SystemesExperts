@@ -7,85 +7,117 @@ import java.util.Scanner;
 public class MoteurInference {
     public MoteurInference() {
     }
+//----------------------------------------------------------------------------------------------------------------------------------------
+    private static int reglesRestants0 = 0;
     public static boolean chainageAvant(ArrayList<String> baseFaits, ArrayList<RegleSimple> baseRegles, String propVerif){
-//        Creer un iterateur de baseRegles
         ListIterator<RegleSimple> iter = baseRegles.listIterator();
-//         verifier que propVerif n'est pas dans baseFaits & baseRegles n'est pas vide
         while (!baseFaits.contains(propVerif) && iter.hasNext()){
-//            verifier l'existence du premisse dans les bases des faits
-            if (baseFaits.contains(iter.next().getPremisse())){
-//                ajouter la conclusion aux baseFaits
-                baseFaits.add(iter.next().getConclusion());
-//                Supprimer la regle de la baseRegle (de iter en fait)
+            RegleSimple regle = iter.next();
+            if (baseFaits.contains(regle.getPremisse())){
+                baseFaits.add(regle.getConclusion());
                 iter.remove();
+            }
+
+        }
+        if (reglesRestants0 != baseRegles.size()){
+            reglesRestants0 = baseRegles.size();
+            if (!baseFaits.contains(propVerif) && !baseRegles.isEmpty()){
+                chainageAvant(baseFaits, baseRegles, propVerif);
             }
         }
 //        vérifier si elle s’est arrêtée parce que la propVerif est retrouvée dans la liste des baseFaits ou non
         return baseFaits.contains(propVerif);
     }
+//----------------------------------------------------------------------------------------------------------------------------------------
+    private static int reglesRestants1 = 0;
     public static boolean chainageAvantComp(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp, String propVerif){
         ListIterator<RegleComposee> iter = baseReglesComp.listIterator();
 //      verifier que propVerif n'est pas dans baseFaits & baseRegles n'est pas vide
         while (!baseFaits.contains(propVerif) && iter.hasNext()){
             RegleComposee regle = iter.next();
 //          verifier l'existence du premisse dans les bases des faits
+            boolean bFcontient = true;
+            for (int i = 0; i < regle.getPremisse().length; i++) {
+                if (!baseFaits.contains(regle.getPremisse()[i])){
+                    bFcontient = false;
+                    break;
+                }
+            }
+            if (bFcontient){
+                baseFaits.add(regle.getConclusion());
+                iter.remove();
+            }
+        }
+        if (reglesRestants1 != baseReglesComp.size()){
+            reglesRestants1 = baseReglesComp.size();
+            chainageAvantComp(baseFaits, baseReglesComp);
+        }
+        return baseFaits.contains(propVerif);
+    }
+//    ----------------------------------------------------------------------------------------------------------------------------------------
+    private static int reglesRestants2 = 0;
+    public static ArrayList<String> chainageAvantComp(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp){
+        ListIterator<RegleComposee> iter = baseReglesComp.listIterator();
+        while (iter.hasNext()){
+            RegleComposee regle = iter.next();
             int counter = 0;
             for (int i = 0; i < regle.getPremisse().length; i++) {
                 if (baseFaits.contains(regle.getPremisse()[i])){
                     counter ++;
                 }
             }
-/*
-          ajouter la conclusion aux baseFaits
-          Supprimer la regle de la baseRegle (de iter en fait)
-*/
-            if (counter == regle.getPremisse().length){
-                baseFaits.add(regle.getConclusion());
-                iter.remove();
-            }
-        }
-        if (!baseFaits.contains(propVerif) && !baseReglesComp.isEmpty()){
-            chainageAvantComp(baseFaits, baseReglesComp, propVerif);
-        }
-//          vérifier si elle s’est arrêtée parce que la propVerif est retrouvée dans la liste des baseFaits ou non
-        return baseFaits.contains(propVerif);
-    }
-    public static ArrayList<String> chainageAvantComp(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp){
-        ListIterator<RegleComposee> iter = baseReglesComp.listIterator();
-//      verifier que propVerif n'est pas dans baseFaits & baseRegles n'est pas vide
-        while (iter.hasNext()){
-                RegleComposee regle = iter.next();
-//          verifier l'existence du premisse dans les bases des faits
-                int counter = 0;
-                for (int i = 0; i < regle.getPremisse().length; i++) {
-                    if (baseFaits.contains(regle.getPremisse()[i])){
-                        counter ++;
-                    }
-                }
-/*
-          ajouter la conclusion aux baseFaits
-          Supprimer la regle de la baseRegle
-*/
             if (counter == regle.getPremisse().length){
                     if (!baseFaits.contains(regle.getConclusion())){
                         baseFaits.add(regle.getConclusion());
                     }
                     iter.remove();
                 }
-            }
-        return baseFaits;
         }
-//  c pour afficher le nombre de recursivite effectue
+        if (reglesRestants2 != baseReglesComp.size()){
+            reglesRestants2 = baseReglesComp.size();
+            chainageAvantComp(baseFaits, baseReglesComp);
+        }
+        return baseFaits;
+    }
+//    ----------------------------------------------------------------------------------------------------------------------------------------
+
+    public static boolean chainageArriere(ArrayList<String> baseFaits, ArrayList<RegleSimple> baseRegles, String propVerif){
+        boolean valVerite = true;
+        if (baseFaits.contains(propVerif)){
+            valVerite = true;
+        }
+        else {
+            ListIterator<RegleSimple> iter = baseRegles.listIterator();
+            ArrayList<RegleSimple> reglesChoisis = new ArrayList<>();
+            while (iter.hasNext()){
+                RegleSimple regle = iter.next();
+                if (regle.getConclusion().equals(propVerif)){
+                    reglesChoisis.add(regle);
+                }
+            }
+            if (!reglesChoisis.isEmpty()) {
+                for (RegleSimple r : reglesChoisis) {
+                        if (!chainageArriere(baseFaits, baseRegles, r.getPremisse())){
+                            valVerite = false;
+                            break;
+                        }
+                    }
+                }
+            else { valVerite = false;}
+        }
+        return valVerite;
+    }
+    //  c pour afficher le nombre de recursivite effectue
     private static int c = 0;
     public static boolean chainageArriereComp(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp, String propVerif){
         boolean valVerite = true;
         c++;
 //  afficher le nombre de recursivite effectue
-//-------------------------------------------------------------------------------------------------
+//----------------------------------------------
         System.out.println("-------------");
         System.out.println(c);
         System.out.println("-------------");
-//-------------------------------------------------------------------------------------------------
+//----------------------------------------------
         System.out.println("propVerif: "+propVerif);
         if (baseFaits.contains(propVerif)){
             System.out.println(propVerif + " existe dans la base des faits");

@@ -10,17 +10,21 @@ import exercice2.RegleComposee;
             RegleSimple r1 = new RegleSimple("P","Q");
             RegleSimple r2 = new RegleSimple("Q","R");
             RegleSimple r3 = new RegleSimple("T","R");
+            RegleSimple r4 = new RegleSimple("L","M");
 
             ArrayList<String> bF1 = new ArrayList<>();
             ArrayList<RegleSimple> bR1 = new ArrayList<>();
 
             bR1.add(r1);
+            bR1.add(r4);
             bR1.add(r2);
             bR1.add(r3);
 
             bF1.add("P");
-//            System.out.println("Exercice1 TP1");
-//            System.out.println(MoteurInference.chainageAvant(bF1, bR1, "R"));
+            System.out.println("Exercice1 chainage avant");
+            System.out.println(MoteurInference.chainageAvant(bF1, bR1, "M"));
+            System.out.println("Exercice2 chainage arriere");
+            System.out.println(MoteurInference.chainageArriere(bF1, bR1, "M"));
 //  Exercice2 TP1 - TP2 ------------------------------------------------------------------------------------
             RegleComposee rc_1 = new RegleComposee("A&B","C");
             RegleComposee rc_2 = new RegleComposee("C&D","F");
@@ -34,10 +38,10 @@ import exercice2.RegleComposee;
             ArrayList<String> bF2 = new ArrayList<>();
             bF2.add("A"); bF2.add("C"); bF2.add("D");
 
-            System.out.println("Exercice2 Chainage Arriere");
-            System.out.println(MoteurInference.chainageArriereComp(bF2, bR2, "B"));
-//            System.out.println("Exercice2 Chainage Avant");
-//            System.out.println(MoteurInference.chainageAvantComp(bF2, bR2, "E"));
+//            System.out.println("Exercice2 Chainage Arriere comp");
+//            System.out.println(MoteurInference.chainageArriereComp(bF2, bR2, "B"));
+//            System.out.println("Exercice2 Chainage Avant comp");
+//            System.out.println(MoteurInference.chainageAvantComp(bF2, bR2, "B"));
 
 //  Exercice3 ---------------------------------------------------------------------------------------------------
             RegleComposee rc1  = new RegleComposee("fleur&graine","phanérogame");
