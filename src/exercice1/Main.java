@@ -19,8 +19,8 @@ import exercice2.RegleComposee;
             bR1.add(r3);
 
             bF1.add("P");
-            System.out.println("Exercice1 TP1");
-            System.out.println(MoteurInference.chainageAvant(bF1, bR1, "F"));
+//            System.out.println("Exercice1 TP1");
+//            System.out.println(MoteurInference.chainageAvant(bF1, bR1, "R"));
 //  Exercice2 TP1 - TP2 ------------------------------------------------------------------------------------
             RegleComposee rc_1 = new RegleComposee("A&B","C");
             RegleComposee rc_2 = new RegleComposee("C&D","F");
@@ -28,23 +28,16 @@ import exercice2.RegleComposee;
             RegleComposee rc_4 = new RegleComposee("F&A","G");
             RegleComposee rc_5 = new RegleComposee("G&F","B");
 
-
             ArrayList<RegleComposee> bR2 = new ArrayList<>();
-            bR2.add(rc_1);
-            bR2.add(rc_2);
-            bR2.add(rc_3);
-            bR2.add(rc_4);
-            bR2.add(rc_5);
+            bR2.add(rc_1);  bR2.add(rc_2);  bR2.add(rc_3);  bR2.add(rc_4);  bR2.add(rc_5);
 
             ArrayList<String> bF2 = new ArrayList<>();
-            bF2.add("A");
-            bF2.add("C");
-            bF2.add("D");
+            bF2.add("A"); bF2.add("C"); bF2.add("D");
 
-            System.out.println("Exercice2 Chainage Avant");
-            System.out.println(MoteurInference.chainageAvantComp(bF2, bR2, "E"));
             System.out.println("Exercice2 Chainage Arriere");
-            System.out.println(MoteurInference.chainageArriereComp(bF2, bR2, "E"));
+            System.out.println(MoteurInference.chainageArriereComp(bF2, bR2, "B"));
+//            System.out.println("Exercice2 Chainage Avant");
+//            System.out.println(MoteurInference.chainageAvantComp(bF2, bR2, "E"));
 
 //  Exercice3 ---------------------------------------------------------------------------------------------------
             RegleComposee rc1  = new RegleComposee("fleur&graine","phanérogame");
@@ -85,7 +78,7 @@ import exercice2.RegleComposee;
             bF3.add("graine");
             bF3.add("plante");
 
-            System.out.println("Exercice3 Chainage Avant");
-            System.out.println(MoteurInference.chainageAvantComp(bF3, bR3));
+//            System.out.println("Exercice3 Chainage Avant");
+//            System.out.println(MoteurInference.chainageAvantComp(bF3, bR3));
         }
 }

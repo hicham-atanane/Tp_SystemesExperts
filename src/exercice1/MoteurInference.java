@@ -75,41 +75,50 @@ public class MoteurInference {
             }
         return baseFaits;
         }
+//  c pour afficher le nombre de recursivite effectue
+    private static int c = 0;
     public static boolean chainageArriereComp(ArrayList<String> baseFaits, ArrayList<RegleComposee> baseReglesComp, String propVerif){
-//      vérifier si la PropVerif figure dans la BF, si oui, elle doit retourner true.
-        if (baseFaits.contains(propVerif)){}
-//      Sinon, il faut parcourir la BR et vérifier si la PropoVerif figure comme conclusion d’une des règles
+        boolean valVerite = true;
+        c++;
+//  afficher le nombre de recursivite effectue
+//-------------------------------------------------------------------------------------------------
+        System.out.println("-------------");
+        System.out.println(c);
+        System.out.println("-------------");
+//-------------------------------------------------------------------------------------------------
+        System.out.println("propVerif: "+propVerif);
+        if (baseFaits.contains(propVerif)){
+            System.out.println(propVerif + " existe dans la base des faits");
+            valVerite = true;
+        }
         else {
             ListIterator<RegleComposee> iter = baseReglesComp.listIterator();
             ArrayList<RegleComposee> reglesChoisis = new ArrayList<>();
-//          Choisir l'ensemble de conflits
             while (iter.hasNext()){
                 RegleComposee regle = iter.next();
                 if (regle.getConclusion().equals(propVerif)){
                     reglesChoisis.add(regle);
                 }
             }
-/*
-          Si la règle est trouvée alors la méthode « chainageArrière » doit être appliquée par
-          récursivité sur la prémisse de la règle trouvée et retourner sa valeur de vérité
-*/
             if (!reglesChoisis.isEmpty()) {
                 for (RegleComposee r : reglesChoisis) {
+//                c'est juste pour afficher la regle sur le console
+//-------------------------------------------------------------------------------------------------
+                    for (String st:r.getPremisse()) {
+                        System.out.print(st + "-");
+                    }
+                    System.out.println("->"+r.getConclusion());
+//-------------------------------------------------------------------------------------------------
                     for (String premisse : r.getPremisse()) {
-                        chainageArriereComp(baseFaits, baseReglesComp, premisse);
+                        if (!chainageArriereComp(baseFaits, baseReglesComp, premisse)){
+                            valVerite = false;
+                            break;
+                        }
                     }
                 }
             }
-/*
-            Si la règle n’est pas trouvée il faut préciser que la règle n’existe pas et que l’utilisateur
-            doit préciser sa valeur de vérité
-*/          else {
-//                    Scanner sc = new Scanner(System.in);
-//                    System.out.println("La règle n’existe pas. Prière de préciser sa valeur de vérité. :)");
-//                    String valeur = sc.nextLine();
-                    return false;
-                }
+            else { valVerite = false;}
         }
-        return true;
+        return valVerite;
     }
 }
